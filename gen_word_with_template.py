@@ -2,11 +2,8 @@ import re
 import docx
 from docx import Document
 from docx.oxml.ns import qn
-from docx.oxml import OxmlElement
-from docx.oxml import parse_xml
 import os
 import csv
-from lxml import etree
 
 master_doc = Document('master_template.docx')
 empty_table_doc = Document('empty_table.docx')
