@@ -24,26 +24,7 @@ def append_template_content(src_doc, dest_doc, run):
                             pict_element = sub_child
                             break
 
-    pict_xml = etree.tostring(pict_element, encoding='unicode')
-    
-    # Parse the XML and remove absolute positioning attributes
-    pict_tree = etree.fromstring(pict_xml)
-    for shape in pict_tree.xpath('.//v:shape', namespaces={'v': 'urn:schemas-microsoft-com:vml'}):
-        if 'style' in shape.attrib:
-            # Remove absolute positioning from the style attribute
-            style = shape.attrib['style']
-            style = ';'.join([prop for prop in style.split(';') 
-                             if not prop.startswith(('mso-position-horizontal', 'mso-position-vertical', 
-                                                    'mso-left-percent', 'mso-top-percent'))])
-            shape.attrib['style'] = style
-    
-    # Convert the modified XML back to a string
-    modified_pict_xml = etree.tostring(pict_tree, encoding='unicode')
-
-    run._r.append(parse_xml(modified_pict_xml))
-    #for element in src_doc.element.body:
-    #    # Import the element from the source doc into the destination doc
-    #    dest_doc.element.body.append(element)
+    run._r.append(pict_element)
     return
 
 def replace_text_in_docx(doc_path, entry_pairs, patterns):
